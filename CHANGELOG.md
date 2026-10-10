@@ -29,3 +29,4 @@ The project follows Spec-Driven Development (SDD) with strict separation between
   - Added shot mechanics tests in `tests/test_shot.py`.
   - Implemented modularity audit script (`scripts/check_line_counts.py`) and automated verification in `tests/test_modularity.py` enforcing the <= 300 lines constraint across all files (`AC-0.6`).
   - Successfully passed independent QA investigation audit (37 tests passing, 0 failures).
+  - Validated by user acceptance and marked ready for merge (`AC-0.1` through `AC-0.6` complete).

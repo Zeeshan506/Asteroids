@@ -25,12 +25,12 @@ According to [specs/mission.md](file:///home/zeshan6a/Projects/bootdotdev/astero
 - Headless execution must succeed in CI or containerized environments without X11/Wayland.
 
 ## 4. Acceptance Criteria
-- [ ] **AC-0.1**: `pytest` is configured in `pyproject.toml` and executable via `uv run pytest`.
-- [ ] **AC-0.2**: Pytest runs headlessly without opening an OS window or failing on missing display devices.
-- [ ] **AC-0.3**: Automated tests in `tests/test_collision.py` verify circle collision detection with 100% mathematical precision.
-- [ ] **AC-0.4**: Automated tests in `tests/test_player.py` verify rotation calculations, directional movement vectors, and cooldown timers.
-- [ ] **AC-0.5**: Automated tests in `tests/test_asteroid.py` verify asteroid splitting logic, radius calculations, and speed scaling.
-- [ ] **AC-0.6**: Line count audit script or rule verifies all repository code and spec files conform to the <= 300 lines limit.
+- [x] **AC-0.1**: `pytest` is configured in `pyproject.toml` and executable via `uv run pytest`.
+- [x] **AC-0.2**: Pytest runs headlessly without opening an OS window or failing on missing display devices.
+- [x] **AC-0.3**: Automated tests in `tests/test_collision.py` verify circle collision detection with 100% mathematical precision.
+- [x] **AC-0.4**: Automated tests in `tests/test_player.py` verify rotation calculations, directional movement vectors, and cooldown timers.
+- [x] **AC-0.5**: Automated tests in `tests/test_asteroid.py` verify asteroid splitting logic, radius calculations, and speed scaling.
+- [x] **AC-0.6**: Line count audit script or rule verifies all repository code and spec files conform to the <= 300 lines limit.
 
 ## 5. Edge Cases & Error Handling
 - **Zero-distance collision**: Two circles with identical coordinates must evaluate as colliding without division-by-zero errors.
