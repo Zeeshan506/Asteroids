@@ -1,4 +1,4 @@
-"""Defensive audio management module for sound effects and mute handling."""
+"""Defensive audio management module for sound effects, background music, and independent volume controls."""
 
 import os
 from typing import Optional
@@ -7,11 +7,17 @@ import pygame
 
 
 class SoundManager:
-    """Manages audio initialization, playback, and mute toggling defensively."""
+    """Manages audio initialization, background music, sound effects, and independent volume controls."""
+
+    DEFAULT_MUSIC_VOLUME: float = 0.20
+    DEFAULT_SFX_VOLUME: float = 0.50
 
     def __init__(self, assets_dir: Optional[str] = None) -> None:
         self.enabled: bool = False
         self.muted: bool = False
+        self.music_volume: float = self.DEFAULT_MUSIC_VOLUME
+        self.sfx_volume: float = self.DEFAULT_SFX_VOLUME
+        self.bg_music_playing: bool = False
         self._sounds: dict[str, pygame.mixer.Sound] = {}
 
         if assets_dir is None:
@@ -22,6 +28,7 @@ class SoundManager:
         self._init_mixer()
         if self.enabled:
             self._load_sounds()
+            self.start_bg_music()
 
     def _init_mixer(self) -> None:
         """Attempt safe initialization of pygame.mixer."""
@@ -38,7 +45,6 @@ class SoundManager:
             "shoot": "single_shot.mp3",
             "asteroid_hit": "asteroid_destruction.mp3",
             "player_hit": "asteroid_destruction.mp3",
-            "thruster": "single_shot.mp3",
         }
 
         for name, filename in sound_mappings.items():
@@ -46,18 +52,85 @@ class SoundManager:
             if os.path.isfile(path):
                 try:
                     sound = pygame.mixer.Sound(path)
-                    sound.set_volume(0.4)
+                    sound.set_volume(self.sfx_volume)
                     self._sounds[name] = sound
                 except (pygame.error, Exception):
                     pass
 
-    def toggle_mute(self) -> bool:
-        """Toggle mute state on or off.
+    def start_bg_music(self, loop: int = -1) -> bool:
+        """Start playing background music continuously on loop at low volume."""
+        if not self.enabled:
+            return False
 
-        Returns:
-            bool: True if sound is now muted, False if unmuted.
-        """
+        bg_path = os.path.join(self.assets_dir, "bg_music.mp3")
+        if not os.path.isfile(bg_path):
+            return False
+
+        try:
+            pygame.mixer.music.load(bg_path)
+            vol = 0.0 if self.muted else self.music_volume
+            pygame.mixer.music.set_volume(vol)
+            pygame.mixer.music.play(loop)
+            self.bg_music_playing = True
+            return True
+        except (pygame.error, Exception):
+            self.bg_music_playing = False
+            return False
+
+    def stop_bg_music(self) -> None:
+        """Stop background music."""
+        if self.enabled and self.bg_music_playing:
+            try:
+                pygame.mixer.music.stop()
+                self.bg_music_playing = False
+            except (pygame.error, Exception):
+                pass
+
+    def set_music_volume(self, volume: float) -> float:
+        """Set background music volume independently (clamped between 0.0 and 1.0)."""
+        self.music_volume = max(0.0, min(1.0, round(volume, 2)))
+        if self.enabled:
+            try:
+                effective_vol = 0.0 if self.muted else self.music_volume
+                pygame.mixer.music.set_volume(effective_vol)
+            except (pygame.error, Exception):
+                pass
+        return self.music_volume
+
+    def set_sfx_volume(self, volume: float) -> float:
+        """Set sound effects volume independently (clamped between 0.0 and 1.0)."""
+        self.sfx_volume = max(0.0, min(1.0, round(volume, 2)))
+        if self.enabled:
+            effective_vol = 0.0 if self.muted else self.sfx_volume
+            for sound in self._sounds.values():
+                try:
+                    sound.set_volume(effective_vol)
+                except (pygame.error, Exception):
+                    pass
+        return self.sfx_volume
+
+    def change_music_volume(self, delta: float) -> float:
+        """Adjust background music volume by delta."""
+        return self.set_music_volume(self.music_volume + delta)
+
+    def change_sfx_volume(self, delta: float) -> float:
+        """Adjust sound effects volume by delta."""
+        return self.set_sfx_volume(self.sfx_volume + delta)
+
+    def toggle_mute(self) -> bool:
+        """Toggle mute state on or off for all audio streams."""
         self.muted = not self.muted
+        if self.enabled:
+            try:
+                pygame.mixer.music.set_volume(0.0 if self.muted else self.music_volume)
+            except (pygame.error, Exception):
+                pass
+            eff_sfx = 0.0 if self.muted else self.sfx_volume
+            for sound in self._sounds.values():
+                try:
+                    sound.set_volume(eff_sfx)
+                except (pygame.error, Exception):
+                    pass
         return self.muted
 
     @property
@@ -66,14 +139,7 @@ class SoundManager:
         return self.enabled and not self.muted
 
     def play(self, sound_name: str) -> bool:
-        """Play requested sound effect if active.
-
-        Args:
-            sound_name: Identifier of the sound to play.
-
-        Returns:
-            bool: True if sound was played, False otherwise.
-        """
+        """Play requested sound effect if active."""
         if not self.is_active:
             return False
 
@@ -96,4 +162,4 @@ class SoundManager:
         return self.play("player_hit")
 
     def play_thruster(self) -> bool:
-        return self.play("thruster")
+        return False

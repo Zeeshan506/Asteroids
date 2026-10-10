@@ -12,8 +12,10 @@ from game_state_manager import GameState, GameStateManager
 from hud import draw_game_over, draw_hud, draw_paused
 from logger import log_event, log_state
 from menu import (
+    draw_audio_settings,
     draw_leaderboard,
     draw_menu,
+    handle_audio_key,
     handle_leaderboard_key,
     handle_menu_key,
 )
@@ -45,6 +47,7 @@ def main() -> None:
     sound_manager = SoundManager()
     state_manager = GameStateManager(initial_state=GameState.MENU)
     selected_menu_index: int = 0
+    selected_audio_index: int = 0
     dt: float = 0.0
 
     updatable = pygame.sprite.Group()
@@ -67,9 +70,6 @@ def main() -> None:
                 return
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_m and state_manager.state != GameState.MENU:
-                    sound_manager.toggle_mute()
-
                 if state_manager.state == GameState.MENU:
                     if event.key == pygame.K_m:
                         sound_manager.toggle_mute()
@@ -79,8 +79,17 @@ def main() -> None:
                         reset_game_entities(player, asteroids, shots, asf)
                     elif action == "LEADERBOARD":
                         state_manager.state = GameState.LEADERBOARD
+                    elif action == "AUDIO SETTINGS":
+                        state_manager.state = GameState.AUDIO_SETTINGS
                     elif action == "QUIT":
                         return
+
+                elif state_manager.state == GameState.AUDIO_SETTINGS:
+                    selected_audio_index, action = handle_audio_key(
+                        event.key, selected_audio_index, sound_manager
+                    )
+                    if action == "MENU":
+                        state_manager.state = GameState.MENU
 
                 elif state_manager.state == GameState.LEADERBOARD:
                     action = handle_leaderboard_key(event.key)
@@ -90,6 +99,16 @@ def main() -> None:
                 elif state_manager.state in (GameState.PLAYING, GameState.PAUSED):
                     if event.key == pygame.K_p:
                         state_manager.toggle_pause()
+                    elif event.key == pygame.K_m:
+                        sound_manager.toggle_mute()
+                    elif event.key == pygame.K_LEFTBRACKET:
+                        sound_manager.change_music_volume(-0.05)
+                    elif event.key == pygame.K_RIGHTBRACKET:
+                        sound_manager.change_music_volume(0.05)
+                    elif event.key == pygame.K_MINUS:
+                        sound_manager.change_sfx_volume(-0.05)
+                    elif event.key in (pygame.K_EQUALS, pygame.K_PLUS):
+                        sound_manager.change_sfx_volume(0.05)
                     elif event.key == pygame.K_ESCAPE:
                         state_manager.state = GameState.MENU
 
@@ -139,8 +158,10 @@ def main() -> None:
         elif state_manager.state == GameState.LEADERBOARD:
             top_scores = state_manager.leaderboard.get_top_scores(10)
             draw_leaderboard(screen, top_scores)
+        elif state_manager.state == GameState.AUDIO_SETTINGS:
+            draw_audio_settings(screen, sound_manager, selected_audio_index)
         elif state_manager.state == GameState.PAUSED:
-            draw_paused(screen)
+            draw_paused(screen, sound_manager)
         elif state_manager.state == GameState.GAME_OVER:
             draw_game_over(screen, state_manager)
 

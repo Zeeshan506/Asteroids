@@ -1,5 +1,6 @@
 """Head-up display (HUD) module for rendering score, lives, pause, and game over screens."""
 
+from typing import Any, Optional
 import pygame
 
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
@@ -54,25 +55,35 @@ def draw_hud(screen: pygame.Surface, state_manager: GameStateManager) -> None:
     screen.blit(lives_surf, (lives_x, 20))
 
 
-def draw_paused(screen: pygame.Surface) -> None:
-    """Render centered PAUSED overlay banner.
+def draw_paused(screen: pygame.Surface, sound_manager: Optional[Any] = None) -> None:
+    """Render centered PAUSED overlay banner with volume status.
 
     Args:
         screen: Pygame display surface.
+        sound_manager: Optional SoundManager instance to render volume levels.
     """
     if screen is None:
         return
 
     banner_font = get_font(56)
     sub_font = get_font(24)
+    vol_font = get_font(20)
 
     pause_surf = banner_font.render("GAME PAUSED", True, (255, 230, 80))
-    pause_rect = pause_surf.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 20))
+    pause_rect = pause_surf.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 40))
     screen.blit(pause_surf, pause_rect)
 
-    hint_surf = sub_font.render("PRESS P TO RESUME", True, (200, 220, 240))
-    hint_rect = hint_surf.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 40))
+    hint_surf = sub_font.render("PRESS P TO RESUME  |  ESC FOR MENU", True, (200, 220, 240))
+    hint_rect = hint_surf.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 15))
     screen.blit(hint_surf, hint_rect)
+
+    if sound_manager is not None:
+        music_pct = int(sound_manager.music_volume * 100)
+        sfx_pct = int(sound_manager.sfx_volume * 100)
+        vol_str = f"MUSIC: {music_pct}% ([/])  |  SFX: {sfx_pct}% (-/=)  |  MUTE: M"
+        vol_surf = vol_font.render(vol_str, True, (160, 200, 230))
+        vol_rect = vol_surf.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 + 60))
+        screen.blit(vol_surf, vol_rect)
 
 
 def draw_game_over(screen: pygame.Surface, state_manager: GameStateManager) -> None:

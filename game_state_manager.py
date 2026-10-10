@@ -13,6 +13,7 @@ class GameState(Enum):
     PLAYING = auto()
     PAUSED = auto()
     LEADERBOARD = auto()
+    AUDIO_SETTINGS = auto()
     GAME_OVER = auto()
 
 

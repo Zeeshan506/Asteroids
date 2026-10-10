@@ -5,13 +5,15 @@
 | AC ID | Description | Verification Method | Pass / Fail |
 |---|---|---|---|
 | AC-3.1 | Safe mixer initialization with silent fallback if hardware is absent | Automated Test: `tests/test_sound_manager.py` | PASS |
-| AC-3.2 | Sound triggers for shots, explosions, collisions, and thrusters | Automated / Unit Test: `tests/test_sound_manager.py` & manual verification | PASS |
+| AC-3.2 | Sound triggers for shots and asteroid/player destruction (no thrust sound) | Automated / Unit Test: `tests/test_sound_manager.py` & manual verification | PASS |
 | AC-3.3 | Pressing M toggles audio mute | Automated Test: `tests/test_sound_manager.py` | PASS |
 | AC-3.4 | Player ship wraps around all screen edges | Automated Test: `tests/test_screen_wrap.py` | PASS |
 | AC-3.5 | SQLite database `sqlite.db` stores leaderboard and persists across sessions | Automated Test: `tests/test_leaderboard_manager.py` | PASS |
 | AC-3.6 | Clear Menu system allows starting game, viewing leaderboard, quitting | Automated Test: `tests/test_menu.py` | PASS |
 | AC-3.7 | Leaderboard view displays top scores and navigation return | Automated Test: `tests/test_menu.py` & `tests/test_leaderboard_manager.py` | PASS |
 | AC-3.8 | Pressing P toggles pause state and overlay | Automated Test: `tests/test_game_state.py` | PASS |
+| AC-3.9 | Looping background music plays at low volume | Automated Test: `tests/test_sound_manager.py` | PASS |
+| AC-3.10 | Separate volume controllers for BG music and SFX | Automated Test: `tests/test_sound_manager.py` & `tests/test_menu.py` | PASS |
 
 ## 2. Automated Test Suite
 - `tests/test_sound_manager.py`: Validates AC-3.1, AC-3.2, AC-3.3.

@@ -5,11 +5,14 @@ This phase delivers the complete arcade presentation: tactile audio feedback, sc
 
 ## Task Groups
 
-### Group 1: Audio System Architecture
+### Group 1: Audio System Architecture & Volume Controls
 - [x] Task 1.1: Create `sound_manager.py` with defensive `pygame.mixer.init()` and fallback handling.
 - [x] Task 1.2: Implement sound loading for `single_shot.mp3`, `asteroid_destruction.mp3`, player hit, and thruster.
 - [x] Task 1.3: Add mute toggle logic (`toggle_mute()`) bound to keyboard shortcut `M`.
-- [x] Task 1.4: Add headless unit tests in `tests/test_sound_manager.py` verifying fallback behavior and sound trigger APIs.
+- [x] Task 1.4: Implement looping background music (`bg_music.mp3`) at low volume (default 0.20).
+- [x] Task 1.5: Implement independent volume controllers for background music and SFX with increment/decrement methods.
+- [x] Task 1.6: Add Audio Settings menu in `menu.py` for adjusting BG music volume and SFX volume.
+- [x] Task 1.7: Add headless unit tests in `tests/test_sound_manager.py` verifying fallback behavior and sound trigger APIs.
 
 ### Group 2: Screen Boundary Wrap-Around
 - [x] Task 2.1: Implement screen wrapping utility module `screen_wrap.py` (`wrap_position(pos, width, height, margin)`).
