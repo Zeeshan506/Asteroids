@@ -170,7 +170,7 @@ def test_collision_math_unaffected_by_sprites():
     player = Player(100.0, 100.0)
     asteroid = Asteroid(100.0, 130.0, 20.0)
 
-    # Distance is 30, radii sum is 20 + 20 = 40 -> colliding
+    # Distance is 30, radii sum is PLAYER_RADIUS + 20 = 50 -> colliding
     assert player.collides_with(asteroid) is True
 
     # Rotate player 90 degrees (sprite bounding box dimensions change)
@@ -179,6 +179,6 @@ def test_collision_math_unaffected_by_sprites():
     assert player.collides_with(asteroid) is True
 
     # Move asteroid outside collision radius
-    asteroid.position = pygame.Vector2(100.0, 150.0)
-    # Distance is 50, radii sum is 40 -> not colliding
+    asteroid.position = pygame.Vector2(100.0, 160.0)
+    # Distance is 60, radii sum is 50 -> not colliding
     assert player.collides_with(asteroid) is False

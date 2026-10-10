@@ -8,7 +8,7 @@ The project follows Spec-Driven Development (SDD) with small, testable, and incr
 | Phase | Title | Objective | Specification Path | Acceptance Criteria | Specification Status | Implementation Status | Validation Status |
 |---|---|---|---|---|---|---|---|
 | Phase 0 | Foundation & Headless Test Harness | Establish SDD specs, headless test harness (`pytest`), and modularity boundaries | [Phase 0 Spec](./2026-10-10-phase-0-foundation-test-harness/) | AC-0.1 through AC-0.6 | Ready | Implemented | Validated |
-| Phase 1 | Sprite Rendering & Asset Integration | Replace vector shapes with 2D sprite textures from `assets/` (ship, asteroids, background) | [Phase 1 Spec](./2026-10-10-phase-1-sprite-rendering-asset-integration/) | AC-1.1 through AC-1.6 | Ready | Implemented | Pending |
+| Phase 1 | Sprite Rendering & Asset Integration | Replace vector shapes with 2D sprite textures from `assets/` (ship, asteroids, background) | [Phase 1 Spec](./2026-10-10-phase-1-sprite-rendering-asset-integration/) | AC-1.1 through AC-1.6 | Ready | Implemented | Validated |
 | Phase 2 | Scoring, Lives & Game Loop State | Add score tracking, lives counter, respawn immunity, and game over / restart UI | [Phase 2 Spec](./2026-10-10-phase-2-scoring-lives-game-loop-state/) | AC-2.1 through AC-2.7 | Ready | Not Started | Pending |
 | Phase 3 | Audio & Polish | Sound effects (laser, explosions, thrust), screen boundaries wrap-around, and high score persistence | [Phase 3 Spec](./2026-10-10-phase-3-audio-and-polish/) | AC-3.1 through AC-3.6 | Ready | Not Started | Pending |
 

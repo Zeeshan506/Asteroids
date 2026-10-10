@@ -39,3 +39,5 @@ The project follows Spec-Driven Development (SDD) with strict separation between
   - Ensured single-load caching for smooth 60 FPS performance without per-frame file I/O (`AC-1.6`).
   - Authored comprehensive test suite in `tests/test_asset_loader.py` (55 tests passing, 0 regressions).
   - Successfully passed Independent QA audit with `QA VERDICT: PASSED`.
+  - Scaled player / spaceship size by 1.5x (`PLAYER_RADIUS = 30`, sprite diameter 60px) per user feedback.
+  - Validated by user manual acceptance and merged into `main` (`AC-1.1` through `AC-1.6` complete).
