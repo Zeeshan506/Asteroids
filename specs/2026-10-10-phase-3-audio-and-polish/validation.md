@@ -42,9 +42,9 @@
 ## 4. Merge Readiness (Definition of Done)
 - [x] All task groups in `plan.md` marked complete.
 - [x] All ACs in `requirements.md` verified in matrix above.
-- [x] Automated tests pass without errors (`uv run pytest`: 96/96 passing).
+- [x] Automated tests pass without errors (`uv run pytest`: 101/101 passing).
 - [x] No file exceeds 300 lines limit (audited: max 240 lines).
 - [x] Test run output exported to `.agents/test_run_output.txt`.
 - [x] Independent QA investigator audit completed with `QA VERDICT: PASSED`.
-- [ ] Manual verification pending acceptance.
+- [x] Manual verification approved by user.
 
