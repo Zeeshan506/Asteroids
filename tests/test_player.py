@@ -96,17 +96,51 @@ def test_player_shoot_creates_shot_with_correct_velocity():
     assert shot.velocity.y == pytest.approx(expected_velocity.y)
 
 
-def test_player_shoot_cooldown_decrement():
+def test_player_update_decrements_shoot_cooldown():
     player = Player(100.0, 100.0)
     player.shot_countdown_timer = PLAYER_SHOOT_COOLDOWN_SECONDS
 
     dt = 0.1
-    # Decrement cooldown as done in update loop
-    player.shot_countdown_timer -= dt
-    assert player.shot_countdown_timer == pytest.approx(PLAYER_SHOOT_COOLDOWN_SECONDS - 0.1)
+    # Exercise the actual Player.update logic
+    player.update(dt)
+    assert player.shot_countdown_timer == pytest.approx(
+        PLAYER_SHOOT_COOLDOWN_SECONDS - dt
+    )
 
-    player.shot_countdown_timer -= PLAYER_SHOOT_COOLDOWN_SECONDS
-    assert player.shot_countdown_timer < 0
+    player.update(0.2)
+    assert player.shot_countdown_timer == pytest.approx(0.0)
+
+    player.update(0.1)
+    assert player.shot_countdown_timer == pytest.approx(-0.1)
+
+
+def test_player_update_gates_shooting_on_cooldown(monkeypatch):
+    from collections import defaultdict
+
+    shots_group = pygame.sprite.Group()
+    Shot.containers = (shots_group,)
+
+    player = Player(100.0, 100.0)
+    # Simulate SPACE key continuously pressed
+    space_pressed = defaultdict(bool, {pygame.K_SPACE: True})
+    monkeypatch.setattr(pygame.key, "get_pressed", lambda: space_pressed)
+
+    # Initial state: timer == 0.0 -> First shot fired and cooldown reset
+    player.update(0.05)
+    assert len(shots_group) == 1
+    assert player.shot_countdown_timer == pytest.approx(PLAYER_SHOOT_COOLDOWN_SECONDS)
+
+    # Next frame during cooldown: no new shot should be created
+    player.update(0.1)
+    assert len(shots_group) == 1
+    assert player.shot_countdown_timer == pytest.approx(
+        PLAYER_SHOOT_COOLDOWN_SECONDS - 0.1
+    )
+
+    # Cooldown expires: next shot is permitted
+    player.update(0.25)
+    assert len(shots_group) == 2
+    assert player.shot_countdown_timer == pytest.approx(PLAYER_SHOOT_COOLDOWN_SECONDS)
 
 
 def test_player_triangle_geometry():
@@ -120,3 +154,21 @@ def test_player_triangle_geometry():
     expected_tip = pygame.Vector2(100.0, 100.0) + pygame.Vector2(0, 1) * PLAYER_RADIUS
     assert tip.x == pytest.approx(expected_tip.x)
     assert tip.y == pytest.approx(expected_tip.y)
+
+
+def test_player_update_processes_movement_and_turn_keys(monkeypatch):
+    from collections import defaultdict
+
+    player = Player(200.0, 200.0)
+
+    # Press D (turn right) and W (move forward)
+    keys_dw = defaultdict(bool, {pygame.K_d: True, pygame.K_w: True})
+    monkeypatch.setattr(pygame.key, "get_pressed", lambda: keys_dw)
+
+    dt = 0.1
+    player.update(dt)
+
+    assert player.rotation == pytest.approx(PLAYER_TURN_SPEED * dt)
+    # Movement applies with current rotation (note: turn applies first in update)
+    assert player.position.x != pytest.approx(200.0) or player.position.y != pytest.approx(200.0)
+
