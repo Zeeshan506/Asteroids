@@ -9,6 +9,8 @@ from constants import (
     PLAYER_SHOOT_SPEED,
     PLAYER_SPEED,
     PLAYER_TURN_SPEED,
+    SCREEN_HEIGHT,
+    SCREEN_WIDTH,
 )
 from shot import Shot
 
@@ -18,6 +20,7 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shot_countdown_timer = 0.0
+        self.invulnerable = False
         self.image = get_player_surface()
 
     # in the Player class
@@ -32,12 +35,21 @@ class Player(CircleShape):
     def draw(self, screen: pygame.Surface) -> None:
         if screen is None:
             return
+        if self.invulnerable and (pygame.time.get_ticks() // 100) % 2 == 0:
+            return
         if self.image is not None:
             rotated_surf = pygame.transform.rotate(self.image, 180 - self.rotation)
             rect = rotated_surf.get_rect(center=self.position)
             screen.blit(rotated_surf, rect)
         else:
             pygame.draw.polygon(screen, "white", self.triangle(), LINE_WIDTH)
+
+    def respawn(self) -> None:
+        """Reset player position to center and clear rotational / cooldown state."""
+        self.position = pygame.Vector2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        self.rotation = 0.0
+        self.shot_countdown_timer = 0.0
+        self.invulnerable = True
 
     def rotate(self, dt: float) -> None:
         self.rotation += PLAYER_TURN_SPEED * dt
