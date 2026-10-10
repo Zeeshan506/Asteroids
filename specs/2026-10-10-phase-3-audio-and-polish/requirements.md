@@ -35,6 +35,7 @@ As described in [specs/mission.md](file:///home/zeshan6a/Projects/bootdotdev/ast
 - Gameplay Polish:
   - Game pause toggle via `P` key with "PAUSED" overlay indicator.
   - Prevent game physics and entity updates while in `PAUSED` state.
+  - Visual collision shield glow & boundary border around the player ship model matching its mathematical collision circle radius.
 
 ### Out-of-Scope (Non-Goals)
 - Networked remote score synchronization or cloud authentication.
@@ -58,6 +59,7 @@ As described in [specs/mission.md](file:///home/zeshan6a/Projects/bootdotdev/ast
 - [x] **AC-3.8**: Pressing `P` toggles pause state, freezing movement and rendering a "PAUSED" indicator.
 - [x] **AC-3.9**: Background music plays continuously on loop at low volume (default 0.20) with safe fallback.
 - [x] **AC-3.10**: Separate volume controls allow independently adjusting background music volume and sound effect volume.
+- [x] **AC-3.11**: Player ship renders a visible energy glow and boundary border around the ship model matching its collision circle radius.
 
 ## 5. Edge Cases & Error Handling
 - **Headless / dummy audio driver**: `pygame.mixer.init()` failing or unavailable must be caught gracefully (`try...except pygame.error`) with an internal `enabled = False` flag.

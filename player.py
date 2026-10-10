@@ -48,6 +48,19 @@ class Player(CircleShape):
             return
         if self.invulnerable and (pygame.time.get_ticks() // 100) % 2 == 0:
             return
+
+        # Visual collision shield border & glow around ship model
+        shield_size = int((self.radius + 6) * 2)
+        shield_surf = pygame.Surface((shield_size, shield_size), pygame.SRCALPHA)
+        center = (shield_size // 2, shield_size // 2)
+        # Soft outer energy glow
+        pygame.draw.circle(shield_surf, (0, 200, 255, 45), center, int(self.radius + 3), width=2)
+        # Luminous collision boundary border
+        border_color = (255, 215, 0, 180) if self.invulnerable else (100, 220, 255, 160)
+        pygame.draw.circle(shield_surf, border_color, center, int(self.radius), width=1)
+        shield_rect = shield_surf.get_rect(center=self.position)
+        screen.blit(shield_surf, shield_rect)
+
         if self.image is not None:
             rotated_surf = pygame.transform.rotate(self.image, 180 - self.rotation)
             rect = rotated_surf.get_rect(center=self.position)

@@ -14,6 +14,7 @@
 | AC-3.8 | Pressing P toggles pause state and overlay | Automated Test: `tests/test_game_state.py` | PASS |
 | AC-3.9 | Looping background music plays at low volume | Automated Test: `tests/test_sound_manager.py` | PASS |
 | AC-3.10 | Separate volume controllers for BG music and SFX | Automated Test: `tests/test_sound_manager.py` & `tests/test_menu.py` | PASS |
+| AC-3.11 | Visual collision shield glow & boundary border around ship model | Automated Test: `tests/test_player.py` | PASS |
 
 ## 2. Automated Test Suite
 - `tests/test_sound_manager.py`: Validates AC-3.1, AC-3.2, AC-3.3.

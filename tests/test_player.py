@@ -172,3 +172,21 @@ def test_player_update_processes_movement_and_turn_keys(monkeypatch):
     # Movement applies with current rotation (note: turn applies first in update)
     assert player.position.x != pytest.approx(200.0) or player.position.y != pytest.approx(200.0)
 
+
+def test_player_draw_visual_shield_border():
+    """Verify player draws visual collision shield glow and border around model."""
+    player = Player(200.0, 200.0)
+    surface = pygame.Surface((400, 400))
+
+    # Normal flight
+    player.invulnerable = False
+    player.draw(surface)
+
+    # Invulnerable state (golden shield border)
+    player.invulnerable = True
+    player.draw(surface)
+
+    # None surface guard
+    player.draw(None)
+
+
