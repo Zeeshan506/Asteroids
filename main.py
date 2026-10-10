@@ -3,6 +3,7 @@ import sys
 import pygame
 from pygame.sprite import Group
 
+from asset_loader import get_background_surface
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
@@ -14,6 +15,7 @@ from shot import Shot
 def main():
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    background_surface = get_background_surface()
     clock = pygame.time.Clock()
     dt: float = 0.0
     x = SCREEN_WIDTH / 2
@@ -35,7 +37,7 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        screen.fill("black")
+        screen.blit(background_surface, (0, 0))
         updatable.update(dt)
         for item in asteroids:
             if player.collides_with(item):

@@ -1,5 +1,6 @@
 import pygame
 
+from asset_loader import get_player_surface
 from circleshape import CircleShape
 from constants import (
     LINE_WIDTH,
@@ -17,6 +18,7 @@ class Player(CircleShape):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
         self.shot_countdown_timer = 0.0
+        self.image = get_player_surface()
 
     # in the Player class
     def triangle(self) -> list[pygame.Vector2]:
@@ -28,7 +30,14 @@ class Player(CircleShape):
         return [a, b, c]
 
     def draw(self, screen: pygame.Surface) -> None:
-        pygame.draw.polygon(screen, "white", self.triangle(), LINE_WIDTH)
+        if screen is None:
+            return
+        if self.image is not None:
+            rotated_surf = pygame.transform.rotate(self.image, 180 - self.rotation)
+            rect = rotated_surf.get_rect(center=self.position)
+            screen.blit(rotated_surf, rect)
+        else:
+            pygame.draw.polygon(screen, "white", self.triangle(), LINE_WIDTH)
 
     def rotate(self, dt: float) -> None:
         self.rotation += PLAYER_TURN_SPEED * dt
