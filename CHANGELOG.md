@@ -49,3 +49,4 @@ The project follows Spec-Driven Development (SDD) with strict separation between
   - Implemented `hud.py` rendering score (top-left), lives (top-right), and centered Game Over banner (`AC-2.7`).
   - Authored unit test suite in `tests/test_game_state.py` (72 tests passing, 0 regressions).
   - Successfully passed Independent QA audit with `QA VERDICT: PASSED`.
+  - Validated by user manual acceptance and merged into `main` (`AC-2.1` through `AC-2.7` complete).
