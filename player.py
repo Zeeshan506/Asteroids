@@ -31,7 +31,7 @@ class Player(CircleShape):
         pygame.draw.polygon(screen, "white", self.triangle(), LINE_WIDTH)
 
     def rotate(self, dt: float) -> None:
-        self.rotation = PLAYER_TURN_SPEED * dt
+        self.rotation += PLAYER_TURN_SPEED * dt
 
     def update(self, dt: float) -> None:
 
@@ -39,18 +39,17 @@ class Player(CircleShape):
         self.shot_countdown_timer -= dt
 
         if keys[pygame.K_a]:
-            self.rotate(dt)
-        if keys[pygame.K_d]:
             self.rotate(-dt)
+        if keys[pygame.K_d]:
+            self.rotate(dt)
         if keys[pygame.K_w]:
             self.move(dt)
         if keys[pygame.K_s]:
             self.move(-dt)
         if keys[pygame.K_SPACE]:
-            if self.shot_countdown_timer > 0:
-                return  # Prevent shooting if the timer is still active
-            self.shot_countdown_timer = PLAYER_SHOOT_COOLDOWN_SECONDS
-            self.shoot()
+            if self.shot_countdown_timer <= 0:
+                self.shot_countdown_timer = PLAYER_SHOOT_COOLDOWN_SECONDS
+                self.shoot()
 
     def move(self, dt) -> None:
         unit_vector = pygame.Vector2(0, 1)

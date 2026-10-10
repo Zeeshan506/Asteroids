@@ -1,4 +1,3 @@
-import ast
 import sys
 
 import pygame
@@ -47,8 +46,9 @@ def main():
             for shot in shots:
                 if shot.collides_with(item):
                     log_event("asteroid_shot")
-                    item.split()
                     shot.kill()
+                    item.split()
+                    break
 
         for item in drawable:
             item.draw(screen)
