@@ -40,3 +40,4 @@ The Asteroids project is an authentic, engaging 2D arcade space shooter inspired
 - **Extreme Modularity**: Prefer many small, focused modules over monolithic classes or files; never exceed 300 lines per file.
 - **Headless Testability**: Game logic, collision math, and score/state progressions should be decoupled from the Pygame display loop so they can be unit-tested headlessly.
 - **Simplicity Over Overengineering**: Build straightforward, maintainable Python code without unnecessary framework abstractions.
+- **Lean & Efficient Verification**: Main agent captures full test execution once to an artifact file; independent QA audits from the file and executes targeted tests only when an issue is detected to avoid duplicate execution waste.

@@ -23,6 +23,7 @@
 - **Type Annotations**: Use Python standard type hints (`typing`) on function signatures and class definitions.
 - **Headless Testing**: Game mechanics must be verifiable without opening a GUI window (mocking display surface or testing pure mathematical/state helper functions).
 - **Asset Integrity**: Asset paths must be resolved robustly relative to the project root or asset directory without hardcoded absolute paths.
+- **Optimized QA Test Artifact Reuse**: To avoid redundant full test suite runs, the main agent executes the test suite once upon completion and exports full output to `.agents/test_run_output.txt`. The independent QA investigator audits results against specs directly from this artifact and only executes targeted tests if an anomaly or defect is found.
 
 ## 4. Deployment & Infrastructure
 - **Platform Targets**: Cross-platform desktop (Linux, macOS, Windows).
@@ -33,3 +34,4 @@
 - **2026-10-10 - Pygame with uv**: Retained Pygame 2.6.1 and Python 3.13 with `uv` for minimal dependencies and fast execution.
 - **2026-10-10 - Strict 300-Line Limit**: Mandated module decomposition to prevent context exhaustion and maintain readability for autonomous agents.
 - **2026-10-10 - Asset-backed 2D Sprites**: Decided to replace initial vector outlines with the prepared sprite textures in `assets/`.
+- **2026-10-10 - QA Test Results Artifact Reuse**: Mandated that the main agent writes final test outputs to `.agents/test_run_output.txt` once, which the QA investigator audits directly without re-running the entire suite (running only targeted tests on suspected issues).

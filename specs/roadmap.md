@@ -1,7 +1,7 @@
 # Project Roadmap & Implementation Phases
 
 ## Phasing Strategy
-The project follows Spec-Driven Development (SDD) with small, testable, and incremental phases. Each phase is specified under `specs/` with dedicated requirements, implementation plans, and validation suites before code is written. All specifications are maintained on the `replanning` branch.
+The project follows Spec-Driven Development (SDD) with small, testable, and incremental phases. Each phase is specified under `specs/` with dedicated requirements, implementation plans, and validation suites before code is written. All specifications are maintained on the `replanning` branch. During feature verification, the main agent exports final test execution results once to `.agents/test_run_output.txt`; the independent QA investigator audits specifications directly from this file and executes only targeted tests on identified issues.
 
 ## Phase Overview
 
