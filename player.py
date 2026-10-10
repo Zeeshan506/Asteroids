@@ -1,3 +1,7 @@
+"""Player spaceship module with sprite rendering, flight physics, and screen wrapping."""
+
+from typing import Optional
+
 import pygame
 
 from asset_loader import get_player_surface
@@ -12,18 +16,25 @@ from constants import (
     SCREEN_HEIGHT,
     SCREEN_WIDTH,
 )
+from screen_wrap import wrap_position
 from shot import Shot
+from sound_manager import SoundManager
 
 
 class Player(CircleShape):
-    def __init__(self, x: float, y: float) -> None:
+    def __init__(
+        self,
+        x: float,
+        y: float,
+        sound_manager: Optional[SoundManager] = None,
+    ) -> None:
         super().__init__(x, y, PLAYER_RADIUS)
-        self.rotation = 0
+        self.rotation = 0.0
         self.shot_countdown_timer = 0.0
         self.invulnerable = False
         self.image = get_player_surface()
+        self.sound_manager: Optional[SoundManager] = sound_manager
 
-    # in the Player class
     def triangle(self) -> list[pygame.Vector2]:
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         right = pygame.Vector2(0, 1).rotate(self.rotation + 90) * self.radius / 1.5
@@ -55,7 +66,6 @@ class Player(CircleShape):
         self.rotation += PLAYER_TURN_SPEED * dt
 
     def update(self, dt: float) -> None:
-
         keys = pygame.key.get_pressed()
         self.shot_countdown_timer -= dt
 
@@ -65,6 +75,8 @@ class Player(CircleShape):
             self.rotate(dt)
         if keys[pygame.K_w]:
             self.move(dt)
+            if self.sound_manager is not None:
+                self.sound_manager.play_thruster()
         if keys[pygame.K_s]:
             self.move(-dt)
         if keys[pygame.K_SPACE]:
@@ -72,14 +84,19 @@ class Player(CircleShape):
                 self.shot_countdown_timer = PLAYER_SHOOT_COOLDOWN_SECONDS
                 self.shoot()
 
-    def move(self, dt) -> None:
+        self.position = wrap_position(self.position)
+
+    def move(self, dt: float) -> None:
         unit_vector = pygame.Vector2(0, 1)
         rotated_vector = unit_vector.rotate(self.rotation)
         rotated_with_speed_vector = rotated_vector * PLAYER_SPEED * dt
         self.position += rotated_with_speed_vector
 
-    def shoot(self):
+    def shoot(self) -> Shot:
         new_shot = Shot(self.position.x, self.position.y)
         new_shot.velocity = (
             pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
         )
+        if self.sound_manager is not None:
+            self.sound_manager.play_shoot()
+        return new_shot

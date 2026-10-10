@@ -191,3 +191,50 @@ def test_get_font_caching():
     assert f1 is f2
     f3 = get_font(32)
     assert f1 is not f3
+
+
+def test_toggle_pause_transitions():
+    """AC-3.8: Verify toggle_pause alternates between PLAYING and PAUSED states."""
+    from hud import draw_paused
+
+    manager = GameStateManager()
+    assert manager.state == GameState.PLAYING
+
+    paused = manager.toggle_pause()
+    assert paused is True
+    assert manager.state == GameState.PAUSED
+
+    resumed = manager.toggle_pause()
+    assert resumed is False
+    assert manager.state == GameState.PLAYING
+
+    # Verify draw_paused executes cleanly
+    screen_surf = pygame.Surface((SCREEN_WIDTH, SCREEN_HEIGHT))
+    draw_paused(screen_surf)
+    draw_paused(None)
+
+
+def test_game_over_persists_score_to_leaderboard(tmp_path):
+    """AC-3.5: Depleting lives persists final score to SQLite database."""
+    from leaderboard_manager import LeaderboardManager
+
+    db_path = str(tmp_path / "game_over_test.db")
+    leaderboard = LeaderboardManager(db_path=db_path)
+    manager = GameStateManager(leaderboard_manager=leaderboard)
+
+    manager.add_asteroid_score(20.0)  # +100
+    assert manager.score == 100
+    assert manager.high_score == 100
+
+    # Deplete all 3 lives
+    manager.lose_life()
+    manager.update(2.1)
+    manager.lose_life()
+    manager.update(2.1)
+    manager.lose_life()
+
+    assert manager.state == GameState.GAME_OVER
+    top_scores = leaderboard.get_top_scores()
+    assert len(top_scores) == 1
+    assert top_scores[0]["score"] == 100
+

@@ -10,7 +10,7 @@ The project follows Spec-Driven Development (SDD) with small, testable, and incr
 | Phase 0 | Foundation & Headless Test Harness | Establish SDD specs, headless test harness (`pytest`), and modularity boundaries | [Phase 0 Spec](./2026-10-10-phase-0-foundation-test-harness/) | AC-0.1 through AC-0.6 | Ready | Implemented | Validated |
 | Phase 1 | Sprite Rendering & Asset Integration | Replace vector shapes with 2D sprite textures from `assets/` (ship, asteroids, background) | [Phase 1 Spec](./2026-10-10-phase-1-sprite-rendering-asset-integration/) | AC-1.1 through AC-1.6 | Ready | Implemented | Validated |
 | Phase 2 | Scoring, Lives & Game Loop State | Add score tracking, lives counter, respawn immunity, and game over / restart UI | [Phase 2 Spec](./2026-10-10-phase-2-scoring-lives-game-loop-state/) | AC-2.1 through AC-2.7 | Ready | Implemented | Validated |
-| Phase 3 | Audio & Polish | Sound effects (laser, explosions, thrust), screen boundaries wrap-around, and high score persistence | [Phase 3 Spec](./2026-10-10-phase-3-audio-and-polish/) | AC-3.1 through AC-3.6 | Ready | Not Started | Pending |
+| Phase 3 | Audio, Menu, Leaderboard & Polish | Sound effects, screen wrap-around, clear menu, and SQLite local database (`sqlite.db`) leaderboard persistence | [Phase 3 Spec](./2026-10-10-phase-3-audio-and-polish/) | AC-3.1 through AC-3.8 | Ready | Implemented | Pending |
 
 ---
 
@@ -47,13 +47,14 @@ The project follows Spec-Driven Development (SDD) with small, testable, and incr
 - [x] Task 2.4: Render on-screen HUD (Score, Lives, and Game Over banner) in `hud.py`.
 - **Deliverable / Verification**: Full arcade gameplay loop playable from start to game-over to restart.
 
-### Phase 3: Audio & Polish
+### Phase 3: Audio, Menu, Leaderboard & Polish
 - Specification: [specs/2026-10-10-phase-3-audio-and-polish/](file:///home/zeshan6a/Projects/bootdotdev/asteroids/specs/2026-10-10-phase-3-audio-and-polish/)
   - [Requirements](file:///home/zeshan6a/Projects/bootdotdev/asteroids/specs/2026-10-10-phase-3-audio-and-polish/requirements.md)
   - [Plan](file:///home/zeshan6a/Projects/bootdotdev/asteroids/specs/2026-10-10-phase-3-audio-and-polish/plan.md)
   - [Validation](file:///home/zeshan6a/Projects/bootdotdev/asteroids/specs/2026-10-10-phase-3-audio-and-polish/validation.md)
-- [ ] Task 3.1: Implement `sound_manager.py` with defensive mixer init, sound effects, and mute toggle (`M`).
-- [ ] Task 3.2: Implement screen wrap-around boundary math for player spaceship.
-- [ ] Task 3.3: Implement persistent high score storage (`highscore.json`) and HUD display.
-- [ ] Task 3.4: Implement game pause toggle (`P` key) with paused overlay.
-- **Deliverable / Verification**: Polished arcade experience with audio feedback, screen wrapping, and persistent high scores.
+- [x] Task 3.1: Implement `sound_manager.py` with defensive mixer init, sound effects, and mute toggle (`M`).
+- [x] Task 3.2: Implement screen wrap-around boundary math for player spaceship and shot boundary cleanup.
+- [x] Task 3.3: Implement local SQLite database `sqlite.db` persistence (`leaderboard_manager.py`) for scores and leaderboard.
+- [x] Task 3.4: Implement clear Menu system and Leaderboard display in `menu.py`.
+- [x] Task 3.5: Implement game pause toggle (`P` key) with paused overlay.
+- **Deliverable / Verification**: Complete arcade experience with audio feedback, screen wrapping, main menu, and persistent SQLite leaderboard.
