@@ -25,12 +25,12 @@ As outlined in [specs/mission.md](file:///home/zeshan6a/Projects/bootdotdev/aste
 - Headless unit tests must be able to test entities without crashing if display is not initialized (asset loading mocked or guarded).
 
 ## 4. Acceptance Criteria
-- [ ] **AC-1.1**: `asset_loader.py` loads and caches all 5 asset textures (`spaceship.png`, `asteriods_big.png`, `asteriods_mid.png`, `asteriods_small.png`, `background.png`) with robust relative path resolution.
-- [ ] **AC-1.2**: `background.png` renders smoothly at `(0, 0)` scaled to the screen resolution (`1280x720`).
-- [ ] **AC-1.3**: `Player.draw` blits `spaceship.png` rotated to match `self.rotation`, with the sprite rect centered exactly on `self.position`.
-- [ ] **AC-1.4**: `Asteroid.draw` blits `asteriods_big.png` for tier 3, `asteriods_mid.png` for tier 2, and `asteriods_small.png` for tier 1, scaled to `radius * 2` and centered on `self.position`.
-- [ ] **AC-1.5**: Circle collision logic (`CircleShape.collides_with`) continues to utilize pure vector distance math and is unaffected by sprite bounding boxes.
-- [ ] **AC-1.6**: Game loop runs smoothly at 60 FPS without memory leaks or per-frame file loading.
+- [x] **AC-1.1**: `asset_loader.py` loads and caches all 5 asset textures (`spaceship.png`, `asteriods_big.png`, `asteriods_mid.png`, `asteriods_small.png`, `background.png`) with robust relative path resolution.
+- [x] **AC-1.2**: `background.png` renders smoothly at `(0, 0)` scaled to the screen resolution (`1280x720`).
+- [x] **AC-1.3**: `Player.draw` blits `spaceship.png` rotated to match `self.rotation`, with the sprite rect centered exactly on `self.position`.
+- [x] **AC-1.4**: `Asteroid.draw` blits `asteriods_big.png` for tier 3, `asteriods_mid.png` for tier 2, and `asteriods_small.png` for tier 1, scaled to `radius * 2` and centered on `self.position`.
+- [x] **AC-1.5**: Circle collision logic (`CircleShape.collides_with`) continues to utilize pure vector distance math and is unaffected by sprite bounding boxes.
+- [x] **AC-1.6**: Game loop runs smoothly at 60 FPS without memory leaks or per-frame file loading.
 
 ## 5. Edge Cases & Error Handling
 - **Missing or corrupted asset files**: `asset_loader.py` must raise a clear descriptive `FileNotFoundError` or provide a fallback color surface if an asset fails to load.
