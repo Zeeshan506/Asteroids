@@ -9,7 +9,7 @@ The project follows Spec-Driven Development (SDD) with small, testable, and incr
 |---|---|---|---|---|---|---|---|
 | Phase 0 | Foundation & Headless Test Harness | Establish SDD specs, headless test harness (`pytest`), and modularity boundaries | [Phase 0 Spec](./2026-10-10-phase-0-foundation-test-harness/) | AC-0.1 through AC-0.6 | Ready | Implemented | Validated |
 | Phase 1 | Sprite Rendering & Asset Integration | Replace vector shapes with 2D sprite textures from `assets/` (ship, asteroids, background) | [Phase 1 Spec](./2026-10-10-phase-1-sprite-rendering-asset-integration/) | AC-1.1 through AC-1.6 | Ready | Implemented | Validated |
-| Phase 2 | Scoring, Lives & Game Loop State | Add score tracking, lives counter, respawn immunity, and game over / restart UI | [Phase 2 Spec](./2026-10-10-phase-2-scoring-lives-game-loop-state/) | AC-2.1 through AC-2.7 | Ready | Not Started | Pending |
+| Phase 2 | Scoring, Lives & Game Loop State | Add score tracking, lives counter, respawn immunity, and game over / restart UI | [Phase 2 Spec](./2026-10-10-phase-2-scoring-lives-game-loop-state/) | AC-2.1 through AC-2.7 | Ready | Implemented | Pending |
 | Phase 3 | Audio & Polish | Sound effects (laser, explosions, thrust), screen boundaries wrap-around, and high score persistence | [Phase 3 Spec](./2026-10-10-phase-3-audio-and-polish/) | AC-3.1 through AC-3.6 | Ready | Not Started | Pending |
 
 ---
@@ -41,10 +41,10 @@ The project follows Spec-Driven Development (SDD) with small, testable, and incr
   - [Requirements](file:///home/zeshan6a/Projects/bootdotdev/asteroids/specs/2026-10-10-phase-2-scoring-lives-game-loop-state/requirements.md)
   - [Plan](file:///home/zeshan6a/Projects/bootdotdev/asteroids/specs/2026-10-10-phase-2-scoring-lives-game-loop-state/plan.md)
   - [Validation](file:///home/zeshan6a/Projects/bootdotdev/asteroids/specs/2026-10-10-phase-2-scoring-lives-game-loop-state/validation.md)
-- [ ] Task 2.1: Implement `GameStateManager` tracking score (20/50/100 tiered points) and lives (3 lives).
-- [ ] Task 2.2: Implement player respawn with 2.0s invulnerability period and visual flicker.
-- [ ] Task 2.3: Implement `GAME_OVER` transition and in-game restart handler (`R` key).
-- [ ] Task 2.4: Render on-screen HUD (Score, Lives, and Game Over banner) in `hud.py`.
+- [x] Task 2.1: Implement `GameStateManager` tracking score (20/50/100 tiered points) and lives (3 lives).
+- [x] Task 2.2: Implement player respawn with 2.0s invulnerability period and visual flicker.
+- [x] Task 2.3: Implement `GAME_OVER` transition and in-game restart handler (`R` key).
+- [x] Task 2.4: Render on-screen HUD (Score, Lives, and Game Over banner) in `hud.py`.
 - **Deliverable / Verification**: Full arcade gameplay loop playable from start to game-over to restart.
 
 ### Phase 3: Audio & Polish

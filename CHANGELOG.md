@@ -41,3 +41,11 @@ The project follows Spec-Driven Development (SDD) with strict separation between
   - Successfully passed Independent QA audit with `QA VERDICT: PASSED`.
   - Scaled player / spaceship size by 1.5x (`PLAYER_RADIUS = 30`, sprite diameter 60px) per user feedback.
   - Validated by user manual acceptance and merged into `main` (`AC-1.1` through `AC-1.6` complete).
+- **Phase 2: Scoring, Lives & Game Loop State ([specs/2026-10-10-phase-2-scoring-lives-game-loop-state/](file:///home/zeshan6a/Projects/bootdotdev/asteroids/specs/2026-10-10-phase-2-scoring-lives-game-loop-state/))**:
+  - Implemented `GameStateManager` tracking tiered score (20/50/100), 3 player lives, respawn invulnerability timers, and restart actions (`AC-2.1`, `AC-2.2`).
+  - Implemented player respawn at screen center with 2.0-second invulnerability and high-frequency flicker (`AC-2.3`, `AC-2.4`).
+  - Implemented clean `GAME_OVER` transition upon exhausting 3 lives, pausing dynamic world updates (`AC-2.5`).
+  - Added in-game restart handler (`R` key) resetting score, lives, asteroids, shots, and player without process restart (`AC-2.6`).
+  - Implemented `hud.py` rendering score (top-left), lives (top-right), and centered Game Over banner (`AC-2.7`).
+  - Authored unit test suite in `tests/test_game_state.py` (72 tests passing, 0 regressions).
+  - Successfully passed Independent QA audit with `QA VERDICT: PASSED`.

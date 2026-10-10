@@ -33,13 +33,13 @@ As specified in [specs/mission.md](file:///home/zeshan6a/Projects/bootdotdev/ast
 - File modularity: state logic and HUD rendering must be separated into dedicated modules (`game_state_manager.py`, `hud.py`) ensuring all files remain under 300 lines.
 
 ## 4. Acceptance Criteria
-- [ ] **AC-2.1**: Hitting or splitting an asteroid awards points based on size: 20 points for large, 50 points for medium, 100 points for small.
-- [ ] **AC-2.2**: Player starts each game with 3 lives. Colliding with an asteroid decrements exactly 1 life.
-- [ ] **AC-2.3**: When lives remain after collision, player respawns at screen center with 2.0 seconds of invulnerability.
-- [ ] **AC-2.4**: While invulnerable, collisions with asteroids are ignored, and the ship visually flashes/flickers.
-- [ ] **AC-2.5**: When lives reach 0, state transitions to `GAME_OVER` and dynamic gameplay updates cease.
-- [ ] **AC-2.6**: Pressing `R` in `GAME_OVER` state resets score to 0, lives to 3, clears existing asteroids/shots, respawns the player, and returns to `PLAYING`.
-- [ ] **AC-2.7**: HUD displays current score and lives during `PLAYING`, and displays "GAME OVER - Press R to Restart" during `GAME_OVER`.
+- [x] **AC-2.1**: Hitting or splitting an asteroid awards points based on size: 20 points for large, 50 points for medium, 100 points for small.
+- [x] **AC-2.2**: Player starts each game with 3 lives. Colliding with an asteroid decrements exactly 1 life.
+- [x] **AC-2.3**: When lives remain after collision, player respawns at screen center with 2.0 seconds of invulnerability.
+- [x] **AC-2.4**: While invulnerable, collisions with asteroids are ignored, and the ship visually flashes/flickers.
+- [x] **AC-2.5**: When lives reach 0, state transitions to `GAME_OVER` and dynamic gameplay updates cease.
+- [x] **AC-2.6**: Pressing `R` in `GAME_OVER` state resets score to 0, lives to 3, clears existing asteroids/shots, respawns the player, and returns to `PLAYING`.
+- [x] **AC-2.7**: HUD displays current score and lives during `PLAYING`, and displays "GAME OVER - Press R to Restart" during `GAME_OVER`.
 
 ## 5. Edge Cases & Error Handling
 - **Rapid successive collisions**: Collisions must be rejected while the invulnerability timer is active (`invulnerability_timer > 0`).
